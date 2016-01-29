@@ -1,6 +1,24 @@
 var express = require('express');
 var app = express(); 
 var morgan = require('morgan');
+var swig = require('swig');
+var engines = require('consolidate');
+app.engine('html', engines.swig);
+app.set('view engine', 'html');
+app.set('views', __dirname + '/views');
+
+
+var locals = {
+    title: 'An Example',
+    people: [
+        { name: 'Gandalf'},
+        { name: 'Frodo' },
+        { name: 'Hermione'}
+    ]
+};
+swig.renderFile(__dirname + '/views/index.html', locals, function (err, output) {
+    console.log(output);
+});
 
 app.listen(3000, function(){
 	console.log("hello");
@@ -17,7 +35,8 @@ app.use('/special', function(req, res){
 });
 
 app.get('/', function (req, res){
-	res.send("hello again");
+	res.render('index', {'title': 'This is home'});
 });
 
 app.use('/news', require('./news-router'));
+
