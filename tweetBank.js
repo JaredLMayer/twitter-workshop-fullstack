@@ -35,7 +35,7 @@ var getFakeTweet = function() {
 for (var i = 0; i < 10; i++) {
   module.exports.add( getFakeName(), getFakeTweet() );
 }
-
+add("Jared Mayer", "Figuring this out");
 // console.log(list());
 // add();
 // console.log(list());
@@ -44,3 +44,4 @@ for (var i = 0; i < 10; i++) {
 // add({'Jared': 'First server experiences'});
 // console.log(find({'Jared': 'First server experiences'}))
 console.log(list());
+
