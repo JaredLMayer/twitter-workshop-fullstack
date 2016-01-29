@@ -2,6 +2,7 @@ var express = require('express');
 var app = express(); 
 var morgan = require('morgan');
 var swig = require('swig');
+	swig.setDefaults({ cache: false });
 var engines = require('consolidate');
 app.engine('html', engines.swig);
 app.set('view engine', 'html');
@@ -34,8 +35,9 @@ app.use('/special', function(req, res){
 	res.send("You've reached the special area");
 });
 
+var people = [{name: 'Full'}, {name: 'Stacker'}, {name: 'Son'}];
 app.get('/', function (req, res){
-	res.render('index', {'title': 'This is home'});
+	res.render('index', {title: 'Hall of Fame', people: people});
 });
 
 app.use('/news', require('./news-router'));
