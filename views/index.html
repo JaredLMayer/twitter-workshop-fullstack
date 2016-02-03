@@ -1,7 +1,9 @@
 {% extends "layout.html" %}
 
 {% block content %}
-  
+
+ 
+
   <div class="page-header">
     <h1>{{title}}</h1>
   </div>
@@ -12,7 +14,22 @@
       100 followers
     </div>
     <div class="col-md-9">
-    
+
+{% if showForm %}
+    <form action="/tweets" method="POST">
+    <label for="name_field">Name:</label>
+    <input name="name" type="text" id="name_field" />
+
+    <label for="text_field">Text:</label>
+    <input name="text" type="text" id="text_field" style="width: 350px;" />
+
+    <input type="submit" value="Submit" />
+  </form>
+{% endif %}
+    <script src="/socket.io/socket.io.js"></script>
+<script>
+  var socket = io();
+</script>
       <!-- display tweets here -->
       {% for tweet in tweets %}
         <li>{{tweet.text}}</li>
@@ -22,3 +39,4 @@
   </div>
     
 {% endblock %}
+

@@ -5,13 +5,28 @@ var swig = require('swig');
 	swig.setDefaults({ cache: false });
 var engines = require('consolidate');
 var routes = require('./routes/');
+var bodyParser = require('body-parser');
+var socketio = require('socket.io');
 
 
-app.use('/', routes);
 app.engine('html', engines.swig);
 app.set('view engine', 'html');
 app.set('views', __dirname + '/views');
 app.use(express.static('public'))
+
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }))
+
+// parse application/json
+app.use(bodyParser.json())
+
+
+// app.use(function (req, res) {
+  // res.setHeader('Content-Type', 'text/plain')
+  // res.write('you posted:\n')
+//   res.end(JSON.stringify(req.body, null, 2))
+// })
+
 
 var locals = {
     title: 'An Example',
@@ -21,13 +36,16 @@ var locals = {
         { name: 'Hermione'}
     ]
 };
+
 swig.renderFile(__dirname + '/views/index.html', locals, function (err, output) {
-    console.log(output);
+    // console.log(output);
 });
 
-app.listen(3000, function(){
-	console.log("hello");
+var server = app.listen(3000, function(){
+	// console.log("hello");
 });
+var io = socketio.listen(server);
+app.use('/', routes(io));
 
 app.use(function (req, res, next) {
     // do your logging here

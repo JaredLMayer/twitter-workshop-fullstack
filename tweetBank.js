@@ -43,5 +43,5 @@ add("Jared Mayer", "Figuring this out");
 // console.log(find({'name': 'Ayana OLogn'}))
 // add({'Jared': 'First server experiences'});
 // console.log(find({'Jared': 'First server experiences'}))
-console.log(list());
+// console.log(list());
 
